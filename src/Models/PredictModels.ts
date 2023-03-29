@@ -1,6 +1,6 @@
 import mongoose, { model } from "mongoose";
 
-interface Imatch {
+interface Ipredict {
   startPlay: boolean;
   stopPlay: boolean;
 
@@ -15,7 +15,7 @@ interface Imatch {
   predict: any[];
 }
 
-const MatchSchema = new mongoose.Schema({
+const PredictSchema = new mongoose.Schema({
   startPlay: {
     type: Boolean,
   },
@@ -40,9 +40,12 @@ const MatchSchema = new mongoose.Schema({
   scoreEntry: {
     type: String,
   },
-  predict: {},
+  predict: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "predicts",
+  },
 });
 
-const UserModels = model<Imatch>("matches", MatchSchema);
+const UserModels = model<Ipredict>("predicts", PredictSchema);
 
 export default UserModels;

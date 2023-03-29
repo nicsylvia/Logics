@@ -23,7 +23,10 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
   },
-  predict: {},
+  predict: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "predicts",
+  },
 });
 
 const UserModels = model<Iuser>("users", UserSchema);

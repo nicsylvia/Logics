@@ -12,7 +12,8 @@ interface Imatch {
 
   dateTime: string;
   scoreEntry: string;
-  odds: string;
+  oddsA: string;
+  oddsB: string;
   predict: any[];
 }
 
@@ -41,10 +42,16 @@ const MatchSchema = new mongoose.Schema({
   scoreEntry: {
     type: String,
   },
-  odds: {
+  oddsA: {
     type: String,
   },
-  predict: {},
+  oddsB: {
+    type: String,
+  },
+  predict: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "predicts",
+  },
 });
 
 const UserModels = model<Imatch>("matches", MatchSchema);
