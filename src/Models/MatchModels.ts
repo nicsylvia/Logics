@@ -1,59 +1,71 @@
-import mongoose, { model } from "mongoose";
+import mongoose from "mongoose";
 
-interface Imatch {
+interface iUser {
   startPlay: boolean;
   stopPlay: boolean;
 
   teamA: string;
   teamB: string;
 
+  teamBOdds: number;
+  Odds: number;
+
   teamAScore: number;
   teamBScore: number;
 
   dateTime: string;
+
   scoreEntry: string;
-  oddsA: string;
-  oddsB: string;
+
   predict: any[];
 }
 
-const MatchSchema = new mongoose.Schema({
-  startPlay: {
-    type: Boolean,
-  },
-  stopPlay: {
-    type: String,
-  },
-  teamA: {
-    type: String,
-  },
-  teamB: {
-    type: String,
-  },
-  teamAScore: {
-    type: Number,
-  },
-  teamBScore: {
-    type: Number,
-  },
-  dateTime: {
-    type: String,
-  },
-  scoreEntry: {
-    type: String,
-  },
-  oddsA: {
-    type: String,
-  },
-  oddsB: {
-    type: String,
-  },
-  predict: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "predicts",
-  },
-});
+interface iUserData extends iUser, mongoose.Document {}
 
-const UserModels = model<Imatch>("matches", MatchSchema);
+const matchModel = new mongoose.Schema(
+  {
+    startPlay: {
+      type: Boolean,
+    },
+    stopPlay: {
+      type: Boolean,
+    },
+    teamA: {
+      type: String,
+    },
 
-export default UserModels;
+    teamB: {
+      type: String,
+    },
+
+    teamAScore: {
+      type: Number,
+    },
+
+    teamBScore: {
+      type: Number,
+    },
+
+    Odds: {
+      type: Number,
+    },
+
+    dateTime: {
+      type: String,
+    },
+
+    scoreEntry: {
+      type: String,
+    },
+
+    predict: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "predicts",
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model<iUserData>("matches", matchModel);
