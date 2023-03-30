@@ -117,3 +117,30 @@ export const GetSingleUser = AsyncHandler(
     });
   }
 );
+
+// Update a user:
+export const UpdateUser = AsyncHandler(
+  async (req: any, res: Response, next: NextFunction) => {
+    const { userName } = req.body;
+
+    const user = await UserModels.findByIdAndUpdate(
+      req.params.id,
+      { userName },
+      { new: true }
+    );
+
+    if (!user) {
+      next(
+        new AppError({
+          message: "An error occured in updating user name",
+          httpcode: HTTPCODES.INTERNAL_SERVER_ERROR,
+        })
+      );
+    }
+
+    return res.status(201).json({
+      message: "Successfully updated the user username",
+      data: user,
+    });
+  }
+);
